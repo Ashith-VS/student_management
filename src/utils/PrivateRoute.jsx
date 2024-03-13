@@ -1,14 +1,12 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
-import { Navigate, Outlet } from 'react-router-dom'
-import { isEmpty } from 'lodash'
+import React from "react";
+import { useSelector } from "react-redux";
+import { Navigate, Outlet } from "react-router-dom";
+import { isEmpty } from "lodash";
 
 const PrivateRoute = () => {
-    const {currentUser} = useSelector((state)=>state.Reducers)
-    console.log("currentUser :",!isEmpty(currentUser))
-  return (
-    !isEmpty(currentUser)?<Outlet/>:<Navigate to={"/"}/>
-  )
-}
+  const { currentUser } = useSelector((state) => state.Reducers);
+  console.log("currentUser :", !isEmpty(currentUser));
+  return !isEmpty(currentUser) ? <Outlet /> : <Navigate to={"/"} />;
+};
 
-export default PrivateRoute
+export default PrivateRoute;

@@ -2,9 +2,13 @@ import React, { useEffect, useState } from "react";
 import deleteIcon from "../assets/images/delete.png";
 import editIcon from "../assets/images/edit.png";
 import { useNavigate } from "react-router-dom";
-import { useDispatch} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { EditUser } from "../Redux/Action/Action";
+
 const UserManagement = () => {
+  const { currentUser } = useSelector((state) => state.Reducers);
+  console.log("currentUser :", currentUser);
+  console.log(currentUser.role === "manager");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [myStorage, setMyStorage] = useState([]);
@@ -21,10 +25,13 @@ const UserManagement = () => {
   };
 
   const handleDelete = (item) => {
-    const updatedStorage = myStorage?.filter((data) => data.name !== item);
+    const updatedStorage = myStorage?.filter((data) => data.id !== item);
     localStorage.setItem("formData", JSON.stringify(updatedStorage));
     setMyStorage(updatedStorage);
   };
+  
+ const res = myStorage.filter(item =>item.role !== "admin")
+ console.log(res)
 
   return (
     <div className="main">
@@ -34,8 +41,7 @@ const UserManagement = () => {
           <button
             className="btn btn-primary mx-3 "
             onClick={() => {
-              window.location.replace("/register")
-            //  navigate("/register")
+              window.location.replace("/register");
             }}
           >
             Create User
@@ -45,8 +51,6 @@ const UserManagement = () => {
             onClick={() => {
               localStorage.removeItem("currentUser");
               window.location.replace("/");
-              // window.location.reload();
-              // navigate("/");
             }}
           >
             Logout
@@ -66,35 +70,89 @@ const UserManagement = () => {
               <th scope="col">Actions</th>
             </tr>
           </thead>
-          <tbody>
-            {myStorage?.map((item, i) => (
-              <tr key={i}>
-                <th scope="row">{i + 1}</th>
-                <td>{item.name}</td>
-                <td>{item.email}</td>
-                <td>{item.mobile}</td>
-                <td>{item.admin === true ? "admin" : "student"}</td>
-                {item.admin === false ? (
+          {currentUser.role === "admin" && (
+            <tbody>
+              {myStorage?.map((item, i) => (
+                <tr key={i}>
+                  <th scope="row">{i + 1}</th>
+                  <td>{item.name}</td>
+                  <td>{item.email}</td>
+                  <td>{item.mobile}</td>
                   <td>
-                    <span><img
-                      src={editIcon}
-                      alt=""
-                      style={{ width: "20px" }}
-                      onClick={() => handleEdit(item.id)}
-                    /></span>           
-                   <span> <img
-                      src={deleteIcon}
-                      alt=""
-                      style={{ width: "20px" }}
-                      onClick={() => handleDelete(item.name)}
-                    /></span>
+                    {item.role === "admin" || item.role === "manager"
+                      ? item.role
+                      : "student"}{" "}
                   </td>
-                ) : (
-                  <td> </td>
-                )}
-              </tr>
-            ))}
-          </tbody>
+                  {item.role !== "admin" ? (
+                    <td>
+                      <span>
+                        <img
+                          src={editIcon}
+                          alt=""
+                          style={{ width: "20px" }}
+                          onClick={() => handleEdit(item.id)}
+                        />
+                      </span>
+                      <span>
+                        {" "}
+                        <img
+                          src={deleteIcon}
+                          alt=""
+                          style={{ width: "20px" }}
+                          onClick={() => handleDelete(item.id)}
+                        />
+                      </span>
+                    </td>
+                  ) : (
+                    <td> </td>
+                  )}
+                </tr>
+              ))}
+            </tbody>
+          )}
+          {currentUser.role === "manager" && (
+            <tbody>
+              {res?.map((item, i) => {
+             
+                return (
+                  <tr key={i}>
+                    <th scope="row">{i + 1}</th>
+                    <td>{item.name}</td>
+                    <td>{item.email}</td>
+                    <td>{item.mobile}</td>
+                    <td>
+                      { item.role === "manager"
+                        ? item.role
+                        : "student"}
+                    </td>
+                    {item.role !== "manager" ? (
+                      <td>
+                        <span>
+                          <img
+                            src={editIcon}
+                            alt=""
+                            style={{ width: "20px" }}
+                            onClick={() => handleEdit(item.id)}
+                          />
+                        </span>
+                        <span>
+                          {" "}
+                          <img
+                            src={deleteIcon}
+                            alt=""
+                            style={{ width: "20px" }}
+                            onClick={() => handleDelete(item.id)}
+                          />
+                        </span>
+                      </td>
+                    ) : (
+                      <td> </td>
+                    )}
+                  </tr>
+                );
+              })}
+            </tbody>
+          )}
         </table>
       </div>
     </div>

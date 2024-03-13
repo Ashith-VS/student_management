@@ -6,17 +6,19 @@ import { isEmpty } from "lodash";
 
 const Register = () => {
   const { editUser } = useSelector((item) => item.Reducers);
+  console.log(editUser);
 
   useEffect(() => {
     if (!isEmpty(editUser) && editUser[0]) {
-      const { id, name, email, mobile, password, admin } = editUser[0];
+      const { id, name, email, mobile, password, role } = editUser[0];
+      console.log(role);
       setFormData({
         id: id,
         name: name || "",
         email: email || "",
         mobile: mobile || "",
         password: password || "",
-        admin: admin || false,
+        role: role,
       });
     }
   }, [editUser]);
@@ -30,7 +32,7 @@ const Register = () => {
     email: "",
     mobile: "",
     password: "",
-    admin: false,
+    role: "student",
   });
 
   const handleSubmit = (e) => {
@@ -45,6 +47,7 @@ const Register = () => {
           (item) => item.id === editUser[0]?.id
         );
         console.log(editIndex, "editIndex");
+        console.log(formData.role);
         if (editIndex) {
           storedFormData[editIndex] = {
             ...formData,
@@ -53,7 +56,7 @@ const Register = () => {
             email: formData.email,
             mobile: formData.mobile,
             password: formData.password,
-            admin: formData.admin,
+            role: formData.role,
           };
           updatedFormData = storedFormData;
         }
@@ -83,16 +86,18 @@ const Register = () => {
   };
 
   const handleChange = (e) => {
-    const { name, value, checked, type } = e.target;
+    const { name, value, type, id } = e.target;
+    console.log(id);
     const numericValue = value.replace(/\D/g, "");
     name === "mobile"
       ? setFormData({ ...formData, [name]: numericValue })
       : setFormData({
           ...formData,
-          [name]: type === "checkbox" ? checked : value,
+          [name]: type === "radio" ? id : value,
         });
     setErrors({ ...errors, [name]: "" });
   };
+  console.log(formData);
 
   const renderedInputs = (item) => {
     switch (item.type) {
@@ -110,7 +115,7 @@ const Register = () => {
               placeholder={item.placeholder}
               onChange={handleChange}
               maxLength={item.maxLength}
-              value={formData[item.name]}
+              value={formData[item.id]}
               disabled={isEmpty(editUser) === false && item.name === "email"}
             />
           </div>
@@ -132,22 +137,23 @@ const Register = () => {
             />
           </div>
         );
-      case "checkbox":
+      case "radio":
+        console.log(formData.role)
         return (
-          <div key={item.name} className="form-check form-switch">
-            <label className="form-label px-2" htmlFor={item.id}>
-              {item.label}
-            </label>
+          <div key={item.id} className="form-check-inline ">
+           
             <input
               id={item.id}
               className="form-check-input "
               type={item.type}
               name={item.name}
-              defaultChecked=""
-              style={{ width: "50px", height: "22px" }}
               onChange={handleChange}
-              value={formData[item.name]}
+              value={formData.role}
+              checked={formData.role === "student" ? false : true}
             />
+            <label className=".form-check. px-2" htmlFor={item.id}>
+              {item.label}
+            </label>
           </div>
         );
       default:

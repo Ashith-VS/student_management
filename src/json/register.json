@@ -1,42 +1,50 @@
 [
   {
-    "id":"name",
+    "id": "name",
     "label": "User Name",
     "name": "name",
     "type": "text",
     "placeholder": "name",
-    "isrequired":true
+    "isrequired": true
   },
   {
-    "id":"email",
+    "id": "email",
     "label": "Email",
     "name": "email",
     "type": "text",
     "placeholder": "email",
-    "isrequired":true,
-    "ispattern":"^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$"
+    "isrequired": true,
+    "ispattern": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$"
   },
   {
-    "id":"mobile",
+    "id": "mobile",
     "label": "Mobile Number",
     "name": "mobile",
     "type": "text",
-    "maxLength" :10,
+    "maxLength": 10,
     "placeholder": "mobile",
-    "isrequired":true
+    "isrequired": true
   },
   {
-    "id":"password",
+    "id": "password",
     "label": "Password",
     "name": "password",
     "type": "password",
     "placeholder": "password",
-    "isrequired":true
-  },{
-    "id":"admin",
-    "label":"Admin",
-    "name":"admin",
-    "type":"checkbox",
-    "isrequired":false
+    "isrequired": true
+  },
+  {
+    "id": "admin",
+    "label": "Admin",
+    "name": "role",
+    "type": "radio",
+    "isrequired": false
+  },
+  {
+    "id": "manager",
+    "label": "Manager",
+    "name": "role",
+    "type": "radio",
+    "isrequired": false
   }
 ]

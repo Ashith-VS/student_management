@@ -54,13 +54,13 @@ const Login = () => {
       setErrors(error);
     }
 
-    console.log(result?.admin && response?.admin);
+    console.log(result?.role && response?.role);
 
-    if (result?.admin === false && response?.admin === false) {
-      navigate("/userProfile");
-      dispatch(CurrentUserAction(result));
-    } else if (result?.admin && response?.admin === true) {
+    if (result?.role && ["admin", "manager"].includes(response?.role)) {
       navigate("/userManagement");
+      dispatch(CurrentUserAction(result));
+    } else if (result?.role && response?.role === "student") {
+      navigate("/userProfile");
       dispatch(CurrentUserAction(result));
     }
   };
