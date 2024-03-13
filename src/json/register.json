@@ -1,0 +1,35 @@
+[
+  {
+    "label": "Student Name",
+    "name": "name",
+    "type": "text",
+    "placeholder": "name",
+    "isrequired":true
+  },
+  {
+    "label": "Email",
+    "name": "email",
+    "type": "text",
+    "placeholder": "email",
+    "isrequired":true
+  },
+  {
+    "label": "Mobile Number",
+    "name": "mobile",
+    "type": "text",
+    "placeholder": "mobile",
+    "isrequired":true
+  },
+  {
+    "label": "Password",
+    "name": "password",
+    "type": "password",
+    "placeholder": "password",
+    "isrequired":true
+  },{
+    "label":"Admin",
+    "name":"admin",
+    "type":"checkbox",
+    "isrequired":false
+  }
+]
