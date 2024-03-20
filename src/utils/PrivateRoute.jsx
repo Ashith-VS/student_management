@@ -5,7 +5,7 @@ import { isEmpty } from "lodash";
 
 const PrivateRoute = () => {
   const { currentUser } = useSelector((state) => state.Reducers);
-  console.log("currentUser :", !isEmpty(currentUser));
+  console.log(!isEmpty(currentUser));
   return !isEmpty(currentUser) ? <Outlet /> : <Navigate to={"/"} />;
 };
 

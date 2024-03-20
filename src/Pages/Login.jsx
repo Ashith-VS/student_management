@@ -2,23 +2,40 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { CurrentUserAction } from "../Redux/Action/Action";
-import { isEmpty } from "lodash";
 
 const Login = () => {
+  const [myStorage, setMyStorage] = useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [myStorage, setMyStorage] = useState([]);
   const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
+  const adminDetails = [
+    {
+      id: Date.now().toString(),
+      name: "Admin",
+      email: "admin@gmail.com",
+      phone: "4567891234",
+      password: "123",
+      role: "admin",
+    },
+  ];
   useEffect(() => {
-    setMyStorage(JSON.parse(localStorage.getItem("formData")));
+    localStorage.setItem("admin", JSON.stringify(adminDetails));
   }, []);
 
-  const handleValidation = (result, response) => {
+  useEffect(() => {
+    const adminData = JSON.parse(localStorage.getItem("admin"));
+    const formDatas = JSON.parse(localStorage.getItem("formData"));
+    setMyStorage({ adminData, formDatas });
+  }, []);
+
+  const { adminData, formDatas } = myStorage;
+
+  const handleValidation = () => {
     let error = {};
     inputs.forEach((rule) => {
       const { name, label, ispattern, isrequired } = rule;
@@ -27,41 +44,50 @@ const Login = () => {
         error[name] = `${label} is required`;
       } else if (ispattern && !RegExp(ispattern).test(value)) {
         error[name] = `${label} is invalid`;
-      } else if (name === "email" && result === undefined) {
-        error[name] = `enter a valid ${label}`;
-      } else if (name === "password" && response === undefined) {
-        error[name] = `enter a valid ${label}`;
-      } else {
-        error[name] = "";
       }
     });
     return error;
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const result =
-      Array.isArray(myStorage) &&
-      myStorage?.find((item) => item.email === formData.email);
-    const response =
-      Array.isArray(myStorage) &&
-      myStorage?.find(
+      Array.isArray(adminData) &&
+      adminData?.find(
         (item) =>
-          item.password === formData.password && item.email === formData.email
+          item.email === formData.email && item.password === formData.password
       );
-    let error = await handleValidation(result, response);
-    if (!isEmpty(error)) {
-      setErrors(error);
+    const response =
+      Array.isArray(formDatas) &&
+      formDatas?.find(
+        (item) =>
+          item.email === formData.email && item.password === formData.password
+      );
+
+    let error = handleValidation();
+    setErrors(error);
+    if (Object.keys(error).length === 0) {
+      inputs.forEach((rule) => {
+        const { name } = rule;
+        const value = formData[name];
+        if (
+          value !== adminData?.[name] &&
+          !formDatas?.some((item) => item[name] === value)
+        ) {
+          error.email = "Invalid email/password";
+        }
+      });
     }
 
-    console.log(result?.role && response?.role);
-
-    if (result?.role && ["admin", "manager"].includes(response?.role)) {
+    if (result?.role === "admin") {
       navigate("/userManagement");
       dispatch(CurrentUserAction(result));
-    } else if (result?.role && response?.role === "student") {
+    } else if (response?.role === "manager") {
+      navigate("/userManagement");
+      dispatch(CurrentUserAction(response));
+    } else if (response?.role === "user") {
       navigate("/userProfile");
-      dispatch(CurrentUserAction(result));
+      dispatch(CurrentUserAction(response));
     }
   };
 
@@ -161,6 +187,7 @@ const Login = () => {
                     <button
                       className="btn btn-primary mb-3 my-3 m-2"
                       onClick={handleSubmit}
+                      type="submit"
                     >
                       Submit
                     </button>

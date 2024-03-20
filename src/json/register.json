@@ -34,17 +34,54 @@
     "isrequired": true
   },
   {
-    "id": "admin",
-    "label": "Admin",
-    "name": "role",
+    "label": "Status",
     "type": "radio",
-    "isrequired": false
+    "name": "role",
+    "isrequired": true,
+    "option": [
+      { "id": "user","label": "User","type": "radio" ,"name": "role"},
+      {"id": "manager","label": "Manager","type": "radio","name": "role"}
+    ]
+  },
+
+  {
+    "id": "Manager",
+    "label": "Manager",
+    "name": "manager",
+    "type": "select",
+    "isrequired": false,
+    "option": [
+      {
+        "value": "",
+        "label": "select manager"
+      },
+      {
+        "value": "Manager 1",
+        "label": "Manager 1"
+      },
+      {
+        "value": "Manager 2",
+        "label": "Manager 2"
+      },
+      {
+        "value": "Manager 3",
+        "label": "Manager 3"
+      },
+      {
+        "value": "Manager 4",
+        "label": "Manager 4"
+      },
+      {
+        "value": "Manager 5",
+        "label": "Manager 5"
+      }
+    ]
   },
   {
-    "id": "manager",
-    "label": "Manager",
-    "name": "role",
-    "type": "radio",
+    "type":"file",
+    "id": "image",
+    "label": "Image",
+    "name": "image",
     "isrequired": false
   }
 ]

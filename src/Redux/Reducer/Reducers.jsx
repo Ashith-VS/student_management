@@ -1,6 +1,7 @@
 import { CURRENT_USER, EDIT_USER } from "../Constants";
 
 const initialState = {
+  admin: [],
   currentUser: JSON.parse(localStorage.getItem("currentUser")) || [],
   editUser: [],
 };
@@ -14,7 +15,6 @@ export default function Reducers(state = initialState, action) {
       };
 
     case EDIT_USER:
-      console.log(action.payload);
       return {
         ...state,
         editUser: action.payload,
