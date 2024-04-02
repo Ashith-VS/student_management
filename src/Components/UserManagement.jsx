@@ -3,8 +3,8 @@ import deleteIcon from "../assets/images/delete.png";
 import editIcon from "../assets/images/edit.png";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { EditUser } from "../Redux/Action/Action";
-import Navbar from "./Navbar";
+import { EditUser } from "../Redux/Action/Action.jsx";
+import Navbar from "./Navbar.jsx";
 import profile from "../assets/images/profile.png";
 
 const UserManagement = () => {

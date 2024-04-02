@@ -1,4 +1,4 @@
-import { CURRENT_USER, EDIT_USER } from "../Constants";
+import { CURRENT_USER, EDIT_USER } from "../Constants.jsx";
 
 const initialState = {
   admin: [],

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { CurrentUserAction } from "../Redux/Action/Action";
+import { CurrentUserAction } from "../Redux/Action/Action.jsx";
 
 const Login = () => {
   const [myStorage, setMyStorage] = useState([]);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { EditUser } from "../Redux/Action/Action";
+import { EditUser } from "../Redux/Action/Action.jsx";
 import { useNavigate } from "react-router-dom";
 import profile from "../assets/images/profile.png";
 

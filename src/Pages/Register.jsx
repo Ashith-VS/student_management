@@ -3,8 +3,8 @@ import json from "../json/register.json";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { isEmpty } from "lodash";
-import Breadcrumb from "../Components/Breadcrumb";
-import { isValidPhoneNumber } from "libphonenumber-js";
+import Breadcrumb from "../Components/Breadcrumb.jsx";
+import { PhoneNumber, isValidPhoneNumber } from "libphonenumber-js";
 
 const Register = () => {
   const { editUser, currentUser } = useSelector((item) => item.Reducers);
@@ -46,7 +46,7 @@ const Register = () => {
     if (!isEmpty(editUser) && editUser[0]) {
       const { id, name, email, mobile, password, role, manager, image } =
         editUser[0];
-   
+
       setFormData({
         id: id,
         name: name || "",

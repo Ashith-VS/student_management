@@ -1,10 +1,10 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "./Pages/Login";
-import Register from "./Pages/Register";
-import UserManagement from "./Components/UserManagement";
-import UserProfile from "./Components/UserProfile";
-import PrivateRoute from "./utils/PrivateRoute";
+import Login from "./Pages/Login.jsx";
+import Register from "./Pages/Register.jsx";
+import UserManagement from "./Components/UserManagement.jsx";
+import UserProfile from "./Components/UserProfile.jsx";
+import PrivateRoute from "./utils/PrivateRoute.jsx";
 const Router = () => {
   return (
     <BrowserRouter>
